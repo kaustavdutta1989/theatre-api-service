@@ -1,0 +1,36 @@
+server:
+  port: 8702
+  forward-headers-strategy: framework
+  servlet:
+    context_path: /theatre/api/v1
+  error:
+    include-message: always
+    include-exception: false
+    include-binding-errors: never
+    include-stacktrace: never
+
+spring:
+  application:
+    name: theatre-api-service
+  datasource:
+    url: jdbc:mysql://localhost:3306/theatre_db
+    username: root
+    password: root
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+feign:
+  client:
+    partner:
+      name: PARTNER-API-SERVICE
+      url: http://localhost:8700/user/api/v1
+      path: partner
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: info

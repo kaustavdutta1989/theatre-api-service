@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+
+  mysql:
+    image: 'mysql:latest'
+    env_file: db.env
+    ports:
+      - 3312:3312
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: app:latest
+    volumes:
+      - ./src:/app/src
+    ports:
+      - 8702:8702
+    links:
+      - mysql
+    env_file: api.env
+
+volumes:
+  mysql_data:
